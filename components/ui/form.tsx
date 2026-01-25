@@ -30,9 +30,12 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group"
+import { Task } from "@/lib/definitions"
+import { createTask, updateTask } from "@/lib/actions"
+
 
 const formSchema = z.object({
-  title: z
+  name: z
     .string()
     .min(5, "Bug title must be at least 5 characters.")
     .max(32, "Bug title must be at most 32 characters."),
@@ -42,17 +45,30 @@ const formSchema = z.object({
     .max(100, "Description must be at most 100 characters."),
 })
 
-export function Form() {
+export function Form({ initialData }: { initialData?: Task }
+) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
+    defaultValues: initialData || {
+      name:  "",
       description: "",
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-      <Link href="/"></Link>
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    try{
+      if(initialData?.id){
+        await updateTask({...data, id: initialData.id})
+        toast.success("Task updated!")
+      }
+      else {
+        await createTask(data)
+        toast.success("Task created!")
+      }
+      
+    }catch (error) {
+        toast.error("Something went wrong")
+      }
   }
 
   return (
@@ -64,7 +80,7 @@ export function Form() {
         <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Controller
-              name="title"
+              name="name"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
@@ -117,10 +133,15 @@ export function Form() {
       <CardFooter>
         <Field orientation="horizontal">
           <Button type="button" variant="outline" onClick={() => form.reset()}>
-            Reset
+           {initialData ? 
+           <Link href={"/"}>
+           Cancel 
+           </Link>
+           : 
+           "Reset"}
           </Button>
-          <Button type="submit" form="form-rhf-demo" onSubmit={() => form.handleSubmit(onSubmit)}>
-            Submit
+          <Button type="submit" form="form-rhf-demo">
+           {initialData ? "Update Task" : "Create Task"}
           </Button>
         </Field>
       </CardFooter>

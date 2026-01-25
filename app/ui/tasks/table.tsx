@@ -9,31 +9,16 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Task } from "@/lib/definitions";
+import { DeleteTask, UpdateTask } from "./button";
 
-export default async function CreateTasks(){
-    const task = await fetchTask();
-    if (!task) {
-    return <p className="mt-4 text-gray-400">No data available.</p>;
-  }
-
+export default async function TasksTable(
+   
+){
+  const lists = await fetchTask();
   return(
-    <main>
-    <section>
-          <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-semibold tracking-tight">Welcome To Your To-Do-App</h1>
-          <p className="text-muted-foreground">Create your lists.</p>
-          </div>
-          </section>
-         
-          <div className="hidden h-full flex-1 flex-col gap-8 p-8 md:flex">
-  <div className="flex items-center justify-between gap-2">
-   <div className="flex flex-col gap-1">
-   <h2 className="text-2xl font-semibold tracking-tight"> Your Tasks </h2>
-   <p className="text-muted-foreground"> Here are the lists of your tasks</p>
-   </div>
-  </div>
+    <main>      
+    <div className="hidden h-full flex-1 flex-col gap-8 p-8 md:flex">
     <div className="flex flex-col gap-4">
-        
     <div className="overflow-hidden rounded-md border">
       <Table>
   <TableHeader>
@@ -49,7 +34,8 @@ export default async function CreateTasks(){
   </TableHeader>
   <TableBody>
     
-      {task.map((list:Task) => (
+      {lists.map((list:Task) => (
+        
          <TableRow key={list.id}>
         <TableCell>
           <Checkbox />
@@ -62,11 +48,21 @@ export default async function CreateTasks(){
         <TableCell>
           {list.description}
         </TableCell>
+        <TableCell>
+          <div>
+          <UpdateTask id={list.id} />
+        </div>
+        </TableCell>
+        <TableCell>
+          <div>
+          <DeleteTask id={list.id}/>
+        </div>
+        </TableCell>
       </TableRow>
+      
         )
         )}
        
-      
   </TableBody>
 </Table>
 </div>

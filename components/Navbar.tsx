@@ -13,13 +13,6 @@ export function Navbar(){
       
       <div className="flex items-center gap-4">
         <div className="flex items-center justify-between ">
-        <div className="flex items-center gap-2">
-         
-          <Link href="/add">Add</Link>
-         
-        </div>
-      </div>
-        <div className="flex items-center justify-between ">
       </div>
         {/* Add the Toggle here */}
         <ModeToggle />
