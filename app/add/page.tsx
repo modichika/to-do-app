@@ -1,3 +1,4 @@
+'use client';
 import { Form } from "@/components/ui/form";
 import Breadcrumbs from "../ui/tasks/breadcrumbs";
 import { fetchTask } from "@/lib/data";
@@ -21,3 +22,4 @@ export default async function Add() {
         </main>  
   );
 }
+

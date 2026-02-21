@@ -23,8 +23,6 @@ jobs:
 
       - name: Build Project
         run: npm run build
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Upload artifact to enable deployment
         uses: actions/upload-artifact@v4
