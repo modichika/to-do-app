@@ -1,4 +1,4 @@
-name: CI/CD for react Todo 
+name: CI/CD for nextjs and postgres Todo 
 
 on:
   push:
