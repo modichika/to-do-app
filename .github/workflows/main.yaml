@@ -33,7 +33,7 @@ jobs:
       - name: Upload artifact to enable deployment
         uses: actions/upload-artifact@v4
         with:
-          name: poduction file
+          name: production file
           path: .next
       
           
@@ -48,7 +48,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: poduction file
+          name: production file
           path: build
 
       - name: Deploy
